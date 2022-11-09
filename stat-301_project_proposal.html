@@ -14593,27 +14593,35 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">broom</span><span class="p">)</span>
-</pre></div>
+<h1 id="Group-41-STAT-301-Project-Proposal:-Predicting-Metacritic-Score-of-Steam-Games">Group 41 STAT-301 Project Proposal: Predicting Metacritic Score of Steam Games<a class="anchor-link" href="#Group-41-STAT-301-Project-Proposal:-Predicting-Metacritic-Score-of-Steam-Games">&#182;</a></h1><h3 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h3><p>Steam is the largest digital distribution platform for computer games. The platform can be seen as a digital community market. It allows its users to purchase games, adding them to a virtual library from which they may be downloaded and installed an unlimited number of times. Metacritic scores rate the overall performance of video games ranging from 0-100, with higher scores indicating more positive reviews, and lower scores indicating less favorable reviews from critics. These scores are helpful since there are thousands of different types of video games published on Steam and consumers may find it difficult to make decisions. There is also research showing that Metacritic scores at least partially explain player experience (Johnson et al., 2014). Therefore, a game's Metacritic score may help consumers make a decision about their game purchasing. And since Metacritic scores have a strong correlation with game sales (Greenwood-Ericksen et al., 2013), understanding and predicting them is important for sellers as well.</p>
+<p>In our project, we will predict the Metacritic score of Steam games (the response variable) released after the year 1970, based on input variables such as the price, the number of recommendations, and release date of a game. The project will be focused on both prediction and inference. Although our main goal is to predict the game's Metacritic Score, it will be also interesting to find out the different relationships between a game's Metacritic score and its input variables (i.e. which variables explain the variation in Metacritic score the best).</p>
+<p>The dataset we used is collected and released under the Steam API (Steam Games, 2022). It has the following 19 variables:</p>
+<ul>
+<li>'ResponseName'</li>
+<li>'ReleaseDate'</li>
+<li>'Metacritic'</li>
+<li>'RecommendationCount'</li>
+<li>'IsFree'</li>
+<li>'GenreIsNonGame'</li>
+<li>'GenreIsIndie'</li>
+<li>'GenreIsAction'</li>
+<li>'GenreIsAdventure'</li>
+<li>'GenreIsCasual'</li>
+<li>'GenreIsStrategy'</li>
+<li>'GenreIsRPG'</li>
+<li>'GenreIsSimulation'</li>
+<li>'GenreIsEarlyAccess'</li>
+<li>'GenreIsFreeToPlay'</li>
+<li>'GenreIsSports'</li>
+<li>'GenreIsRacing'</li>
+<li>'GenreIsMassivelyMultiplayer'</li>
+<li>'PriceInitial'</li>
+</ul>
+<p>The variable 'ResponseName' will not be used as it is a unique value representing the name of a game. The continuous variables in this dataset are 'Release Date' (representing the number of days passed since January 1st, 1970), 'PriceInitial' (the price of a video game), and 'RecommendationCount' (the number of recommendations of a video game). The other variables are logicals (i.e. TRUE  or FALSE) that say whether or not a game fits into a certain genre or category.</p>
 
-     </div>
 </div>
 </div>
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -14631,7 +14639,53 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># load libraries</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">broom</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>── <span class="ansi-bold">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.2 ──
+<span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">ggplot2</span> 3.3.6      <span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">purrr  </span> 0.3.5 
+<span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">tibble </span> 3.1.8      <span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">dplyr  </span> 1.0.10
+<span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">tidyr  </span> 1.2.1      <span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">stringr</span> 1.4.1 
+<span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">readr  </span> 2.1.3      <span class="ansi-green-fg">✔</span> <span class="ansi-blue-fg">forcats</span> 0.5.2 
+── <span class="ansi-bold">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──
+<span class="ansi-red-fg">✖</span> <span class="ansi-blue-fg">dplyr</span>::<span class="ansi-green-fg">filter()</span> masks <span class="ansi-blue-fg">stats</span>::filter()
+<span class="ansi-red-fg">✖</span> <span class="ansi-blue-fg">dplyr</span>::<span class="ansi-green-fg">lag()</span>    masks <span class="ansi-blue-fg">stats</span>::lag()
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="n">steam_games</span> <span class="o">&lt;-</span> <span class="nf">read_csv</span><span class="p">(</span><span class="s">&#39;https://raw.githubusercontent.com/DanielZCode/STAT-301-Project/main/games-features-edit.csv&#39;</span><span class="p">)</span> <span class="c1"># read_csv on url which responds with the data</span>
@@ -14747,8 +14801,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Wrangling">Wrangling<a class="anchor-link" href="#Wrangling">&#182;</a></h3><p>In order to correctly use the <code>ReleaseDate</code> variable, we will need to convert it from its current character-based format to a numerical value. Although it would be convenient to convert this variable year that the game was released, that would not be a true continuous variable since years are mostly discrete (especially in the case of Steam games, where the data available is fairly recent). Hence, we will need to convert <code>ReleaseDate</code> to a continuous variable representing the number of days passed since January 1st, 1970. This is a common representation of time in computers.</p>
-<p>In addition, we will filter the data for missing values, and in particular check that a game's <code>Metacritic</code> score is not 0, because that indicates a lack of reviews and an unplayed game. We will also filter only for games that were released after 1970.</p>
+<h4 id="Data-Wrangling">Data Wrangling<a class="anchor-link" href="#Data-Wrangling">&#182;</a></h4><p>In order to correctly use the <code>ReleaseDate</code> variable, we will need to convert it from its current character-based format to a numerical value. Although it would be convenient to convert this variable year that the game was released, that would not be a true continuous variable since years are mostly discrete (especially in the case of Steam games, where the data available is fairly recent). Hence, we will need to convert <code>ReleaseDate</code> to a continuous variable representing the number of days passed since January 1st, 1970. This is a common representation of time in computers.</p>
+<p>In addition, we will filter the data for missing values, and also check that a game's <code>Metacritic</code> score is not 0, because that indicates a lack of reviews and an unplayed game. We will also filter only for games that were released after 1970.</p>
 
 </div>
 </div>
@@ -14758,7 +14812,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">3012</span><span class="p">)</span>
@@ -14769,7 +14823,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 <span class="n">steam_games</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">mutate_if</span><span class="p">(</span><span class="n">is.logical</span><span class="p">,</span> <span class="n">as_factor</span><span class="p">)</span>
 <span class="nf">head</span><span class="p">(</span><span class="n">steam_games</span><span class="p">)</span>
-<span class="nf">nrow</span><span class="p">(</span><span class="n">steam_games</span><span class="p">)</span>
+<span class="nf">nrow</span><span class="p">(</span><span class="n">steam_games</span><span class="p">)</span> <span class="c1">## number of steam games, filtered</span>
 </pre></div>
 
      </div>
@@ -14843,14 +14897,14 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">3012</span><span class="p">)</span>
 <span class="n">steam_games</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">sample_n</span><span class="p">(</span><span class="m">500</span><span class="p">)</span>
 
-<span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">steam_games</span><span class="o">$</span><span class="n">GenreIsNonGame</span><span class="p">))</span> <span class="c1"># == 1</span>
-<span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">steam_games</span><span class="o">$</span><span class="n">GenreIsEarlyAccess</span><span class="p">))</span> <span class="c1"># == 1</span>
+<span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">steam_games</span><span class="o">$</span><span class="n">GenreIsNonGame</span><span class="p">))</span> <span class="c1"># == 1, hence no variation in GenreIsNonGame</span>
+<span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">steam_games</span><span class="o">$</span><span class="n">GenreIsEarlyAccess</span><span class="p">))</span> <span class="c1"># == 1, hence no variation in GenreIsEarlyAccess</span>
 
 <span class="n">steam_games</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">select</span><span class="p">(</span><span class="o">-</span><span class="n">GenreIsNonGame</span><span class="p">,</span> <span class="o">-</span><span class="n">GenreIsEarlyAccess</span><span class="p">)</span>
 
@@ -14940,7 +14994,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Exploratory-Analysis">Exploratory Analysis<a class="anchor-link" href="#Exploratory-Analysis">&#182;</a></h3><p>In this section we will explore some estimates variables. In addition we will plot visualizations of our reponse variable, <code>Metacritic</code>, and its relation to other variables.</p>
+<h4 id="Exploratory-Analysis">Exploratory Analysis<a class="anchor-link" href="#Exploratory-Analysis">&#182;</a></h4><p>In this section we will explore some estimates variables. In addition we will plot visualizations of our reponse variable, <code>Metacritic</code>, and its relation to other variables.</p>
 <p>First, let us see the distribution of <code>Metacritic</code> scores.</p>
 
 </div>
@@ -14951,7 +15005,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span> <span class="o">=</span> <span class="m">7</span><span class="p">,</span> <span class="n">repr.plot.height</span> <span class="o">=</span> <span class="m">5</span><span class="p">)</span>
@@ -15189,7 +15243,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   &lt;path d="M 496 23.957031 L 498 23.957031 L 498 327.847656 L 496 327.847656 Z M 496 23.957031 "/&gt;
 &lt;/clipPath&gt;
 &lt;/defs&gt;
-&lt;g id="surface441"&gt;
+&lt;g id="surface138"&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;path style="fill:none;stroke-width:1.066978;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0 360 L 504 360 L 504 0 L 0 0 Z M 0 360 "/&gt;
@@ -15436,7 +15490,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="n">steam_games_metacritic_releasedate_plot</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
@@ -15752,7 +15806,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   &lt;path d="M 406 23.957031 L 408 23.957031 L 408 327.847656 L 406 327.847656 Z M 406 23.957031 "/&gt;
 &lt;/clipPath&gt;
 &lt;/defs&gt;
-&lt;g id="surface482"&gt;
+&lt;g id="surface253"&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;path style="fill:none;stroke-width:1.066978;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0 360 L 504 360 L 504 0 L 0 0 Z M 0 360 "/&gt;
@@ -16500,7 +16554,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="n">steam_games_metacritic_price_plot</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
@@ -16792,7 +16846,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   &lt;path d="M 450 23.957031 L 452 23.957031 L 452 327.847656 L 450 327.847656 Z M 450 23.957031 "/&gt;
 &lt;/clipPath&gt;
 &lt;/defs&gt;
-&lt;g id="surface526"&gt;
+&lt;g id="surface309"&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;path style="fill:none;stroke-width:1.066978;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0 360 L 504 360 L 504 0 L 0 0 Z M 0 360 "/&gt;
@@ -17514,7 +17568,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="n">steam_games_metacritic_recommendation_plot</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
@@ -17826,7 +17880,7 @@ Warning message:
   &lt;path d="M 476 23.957031 L 478 23.957031 L 478 327.847656 L 476 327.847656 Z M 476 23.957031 "/&gt;
 &lt;/clipPath&gt;
 &lt;/defs&gt;
-&lt;g id="surface573"&gt;
+&lt;g id="surface366"&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;rect x="0" y="0" width="504" height="360" style="fill:rgb(100%,100%,100%);fill-opacity:1;stroke:none;"/&gt;
 &lt;path style="fill:none;stroke-width:1.066978;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(100%,100%,100%);stroke-opacity:1;stroke-miterlimit:10;" d="M 0 360 L 504 360 L 504 0 L 0 0 Z M 0 360 "/&gt;
@@ -18588,7 +18642,7 @@ Warning message:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Below we will compute some estimates of the data.</p>
+<h4 id="Estimates">Estimates<a class="anchor-link" href="#Estimates">&#182;</a></h4><p>Below we will compute some estimates of the data.</p>
 
 </div>
 </div>
@@ -18598,7 +18652,7 @@ Warning message:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="n">steam_games_summarized</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">ReleaseDate_mean</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">ReleaseDate</span><span class="p">),</span> 
@@ -18653,8 +18707,8 @@ Warning message:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>Figure 4. Averages of different variables</strong></p>
-<p>As we can see, the average Metacritic score of a Steam game is approximately <strong>72</strong>, and the average release date was in <strong>November, 2012</strong>. In addition, Steam games have received around <strong>3000</strong> recommendations on average, and have a mean price of approximately <strong>$14</strong>.</p>
+<p><strong>Figure 5. Averages of different variables</strong></p>
+<p>As we can see, the average Metacritic score of a Steam game is approximately <strong>72</strong>, and the average release date was in <strong>November, 2012</strong>. In addition, Steam games have received around <strong>3000</strong> recommendations on average, and have a mean price of approximately <strong>$14.5</strong>.</p>
 
 </div>
 </div>
@@ -18666,7 +18720,7 @@ Warning message:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Finally, let's compute an additive linear regression model using all of the variables. This will help us understand which variables are statistically significant, and which variables are not.</p>
+<h4 id="Preliminary-Model">Preliminary Model<a class="anchor-link" href="#Preliminary-Model">&#182;</a></h4><p>Finally, let's compute an additive linear regression model using all of the variables. This will help us understand which variables are statistically significant, and which variables are not.</p>
 
 </div>
 </div>
@@ -18676,14 +18730,13 @@ Warning message:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="n">steam_games_mlr_add</span> <span class="o">&lt;-</span> <span class="nf">lm</span><span class="p">(</span><span class="n">Metacritic</span> <span class="o">~</span> <span class="n">.</span> <span class="o">-</span> <span class="n">ResponseName</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">steam_games</span><span class="p">)</span>
 
 <span class="n">steam_games_mlr_add_tidy</span> <span class="o">&lt;-</span> <span class="nf">tidy</span><span class="p">(</span><span class="n">steam_games_mlr_add</span><span class="p">,</span> <span class="n">conf.level</span> <span class="o">=</span> <span class="m">0.9</span><span class="p">,</span> <span class="n">conf.int</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">mutate_if</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">,</span> <span class="n">round</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
 <span class="n">steam_games_mlr_add_tidy</span>
-<span class="n">steam_games_mlr_add</span>
 </pre></div>
 
      </div>
@@ -18733,44 +18786,42 @@ Warning message:
 </div>
 
 </div>
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>
-Call:
-lm(formula = Metacritic ~ . - ResponseName, data = steam_games)
-
-Coefficients:
-                    (Intercept)                      ReleaseDate  
-                      1.124e+02                       -2.588e-03  
-            RecommendationCount                       IsFreeTRUE  
-                      2.229e-04                       -9.317e-01  
-               GenreIsIndieTRUE                GenreIsActionTRUE  
-                      7.719e-01                       -3.026e+00  
-           GenreIsAdventureTRUE                GenreIsCasualTRUE  
-                     -8.834e-01                       -2.333e+00  
-            GenreIsStrategyTRUE                   GenreIsRPGTRUE  
-                     -6.356e-01                       -2.042e-01  
-          GenreIsSimulationTRUE            GenreIsFreeToPlayTRUE  
-                     -2.624e+00                       -1.925e+00  
-              GenreIsSportsTRUE                GenreIsRacingTRUE  
-                     -2.550e-02                       -2.367e+00  
-GenreIsMassivelyMultiplayerTRUE                     PriceInitial  
-                      5.053e+00                        1.173e-01  
-</pre>
-</div>
 
 </div>
 
 </div>
 
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Figure 6. Estimated Coefficients of an Additive Multiple Linear Regression Model</strong></p>
+<h3 id="Methods">Methods<a class="anchor-link" href="#Methods">&#182;</a></h3><p>This report uses a dataset with huge sample of 12624 games and 19 variables. Once filtered to remove observations with missing values, the sample size became more reasonable. But given the technical constraints (file size, plot load time), we chose to reduce the sample further, to a size of 500.</p>
+<p>Wrangling was done to make variables easier to use in our model. The <code>ReleaseDate</code> variable was converted from a character format to a continuous variable. All of the logical variables representing a game's genre or category were converted to a factor so that our models could use them.</p>
+<p>The report uses scatterplots and tables to visualize and summarize the data and the relationships between variables. It also fits an additive multiple linear regression model using all of the variables in the dataset. However, more must be done in the final report. In particular, we will need to employ model selection techniques to answer our inferential questions and figure out which variables are relevant. To answer our predictive questions we will also need to evaluate our models using metrics such the <strong>MSE</strong> (Mean Squared Error).</p>
+<p>If we are able to successfully create a predictive model for Metacritic scores, consumers could use this model to easily make a decision about their gaming purchase based on some input variables. Additionally, statistical analysis of this dataset will allow us to understand the relationship between Metacritic scores and other properties of a game. 
+.</p>
 
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="References">References<a class="anchor-link" href="#References">&#182;</a></h3><p>Greenwood-Ericksen, A., Poorman, S. R., &amp; Papp, R. (2013). On the validity of Metacritic in assessing game value. <em>Eludamos: Journal for Computer Game Culture, 7</em>(1), 101–127. <a href="https://doi.org/10.7557/23.6150">https://doi.org/10.7557/23.6150</a></p>
+<p>Johnson, D., Watling, C., Gardner, J., &amp; Nacke, L. E. (2014). The edge of glory: the relationship between metacritic scores and player experience. <em>Proceedings of the First ACM SIGCHI Annual Symposium on Computer-Human Interaction in Play</em>. <a href="https://doi.org/10.1145/2658537.2658694">https://doi.org/10.1145/2658537.2658694</a></p>
+<p><em>Steam games</em>. Kaggle. (2022, October 21). Retrieved November 9, 2022, from <a href="https://www.kaggle.com/datasets/thedevastator/get-your-game-on-metacritic-recommendations-and">https://www.kaggle.com/datasets/thedevastator/get-your-game-on-metacritic-recommendations-and</a></p>
+
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
