@@ -14617,7 +14617,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <li>'GenreIsMassivelyMultiplayer'</li>
 <li>'PriceInitial'</li>
 </ul>
-<p>The variable 'ResponseName' will not be used as it is a unique value representing the name of a game. The continuous variables in this dataset are 'Release Date' (representing the number of days passed since January 1st, 1970), 'PriceInitial' (the price of a video game), and 'RecommendationCount' (the number of recommendations of a video game). The other variables are logicals (i.e. TRUE  or FALSE) that say whether or not a game fits into a certain genre or category.</p>
+<p>The variable <code>ResponseName</code> will not be used as it is a unique value representing the name of a game. The continuous input variables in this dataset are <code>ReleaseDate</code> (representing the number of days passed since January 1st, 1970), <code>PriceInitial</code> (the price of a video game), and <code>RecommendationCount</code> (the number of recommendations of a game on Steam). The other variables are logicals (i.e. TRUE  or FALSE) that say whether or not a game fits into a certain genre or category.</p>
 
 </div>
 </div>
@@ -14688,11 +14688,13 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="n">steam_games</span> <span class="o">&lt;-</span> <span class="nf">read_csv</span><span class="p">(</span><span class="s">&#39;https://raw.githubusercontent.com/DanielZCode/STAT-301-Project/main/games-features-edit.csv&#39;</span><span class="p">)</span> <span class="c1"># read_csv on url which responds with the data</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#read_csv on a url, which responds with the data</span>
+<span class="n">steam_games</span> <span class="o">&lt;-</span> <span class="nf">read_csv</span><span class="p">(</span><span class="s">&#39;https://raw.githubusercontent.com/DanielZCode/STAT-301-Project/main/games-features-edit.csv&#39;</span><span class="p">)</span>
+                                                                                           
 <span class="nf">head</span><span class="p">(</span><span class="n">steam_games</span><span class="p">)</span> <span class="c1"># preview of the data </span>
 <span class="nf">nrow</span><span class="p">(</span><span class="n">steam_games</span><span class="p">)</span> <span class="c1"># 12624 data points (games)</span>
-<span class="nf">colnames</span><span class="p">(</span><span class="n">steam_games</span><span class="p">)</span> <span class="c1">#variable names</span>
-<span class="nf">length</span><span class="p">(</span><span class="nf">colnames</span><span class="p">(</span><span class="n">steam_games</span><span class="p">))</span> <span class="c1">#number of variables == 19</span>
+<span class="nf">colnames</span><span class="p">(</span><span class="n">steam_games</span><span class="p">)</span> <span class="c1">#variable names, number of variables == 19</span>
+<span class="c1">#length(colnames(steam_games)) #prints out number of variables</span>
 </pre></div>
 
      </div>
@@ -14778,17 +14780,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 
 </div>
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-19
-</div>
-
-</div>
 
 </div>
 
@@ -14816,7 +14807,9 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">3012</span><span class="p">)</span>
-<span class="n">steam_games</span><span class="o">$</span><span class="n">ReleaseDate</span> <span class="o">&lt;-</span> <span class="n">steam_games</span><span class="o">$</span><span class="n">ReleaseDate</span> <span class="o">%&gt;%</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&quot;%b%d%Y&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>  <span class="nf">as.numeric</span><span class="p">()</span> <span class="c1">#convert dates to days since 1970 (default internal representation) </span>
+
+<span class="c1">#convert dates to days since 1970 (default internal representation) </span>
+<span class="n">steam_games</span><span class="o">$</span><span class="n">ReleaseDate</span> <span class="o">&lt;-</span> <span class="n">steam_games</span><span class="o">$</span><span class="n">ReleaseDate</span> <span class="o">%&gt;%</span> <span class="nf">as.Date</span><span class="p">(</span><span class="n">format</span><span class="o">=</span><span class="s">&quot;%b%d%Y&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>  <span class="nf">as.numeric</span><span class="p">()</span> 
 
 
 <span class="n">steam_games</span> <span class="o">&lt;-</span> <span class="n">steam_games</span> <span class="o">%&gt;%</span> <span class="nf">drop_na</span><span class="p">()</span> <span class="o">%&gt;%</span> <span class="nf">filter</span><span class="p">(</span><span class="n">Metacritic</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">,</span> <span class="n">ReleaseDate</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="c1"># filter for more than 0 days passed since 1970, metacritic score &gt; 0</span>
