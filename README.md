@@ -1,4 +1,4 @@
-# STAT-301-Project
+# Metacritic Score Predictive model
 
 Project for the course **STAT 301: Statistical Modelling for Data Science** at UBC. 
 
